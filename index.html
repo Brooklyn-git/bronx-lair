@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="matrix">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bronx' lair</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --fg: #00ff41;
+    --fg-dim: #005a1a;
+    --fg-bright: #7dffa0;
+    --accent: #00cc33;
+    --glow: 0 0 4px #00ff41, 0 0 8px #00ff4140;
+    --font: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+    --scanline: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,65,0.015) 2px, rgba(0,255,65,0.015) 4px);
+  }
+
+  html { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 15px; line-height: 1.7; }
+
+  body {
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  canvas#matrix-rain {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0; opacity: 0.12;
+  }
+
+  .crt-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--scanline);
+    pointer-events: none; z-index: 1;
+  }
+
+  .container {
+    position: relative; z-index: 2;
+    max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem 3rem;
+  }
+
+  a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--fg-dim); transition: all 0.2s; }
+  a:hover, a:focus { color: var(--fg-bright); border-bottom-color: var(--fg-bright); text-shadow: var(--glow); }
+
+  /* ── LANGUAGE TOGGLE ── */
+  .lang-toggle {
+    position: fixed; top: 1rem; right: 1rem; z-index: 10;
+    display: flex; gap: 0;
+    border: 1px solid var(--fg-dim); border-radius: 4px; overflow: hidden;
+  }
+  .lang-toggle button {
+    background: transparent; color: var(--fg-dim); border: none;
+    font-family: var(--font); font-size: 0.8rem; padding: 0.3rem 0.6rem;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .lang-toggle button.active { color: var(--fg); background: rgba(0,255,65,0.06); }
+  .lang-toggle button:hover { color: var(--fg-bright); }
+
+  /* ── ASCII HEADER ── */
+  .ascii-header {
+    font-size: 0.45rem; line-height: 1.15; white-space: pre;
+    color: var(--fg); margin-bottom: 0.5rem; user-select: none;
+  }
+  @media (max-width: 500px) { .ascii-header { font-size: 0.25rem; } }
+
+  .tagline {
+    font-size: 0.9rem; color: var(--fg-dim); margin-bottom: 2.5rem;
+    border-left: 2px solid var(--fg-dim); padding-left: 1rem;
+  }
+
+  /* ── SECTION ── */
+  section { margin-bottom: 2.5rem; }
+
+  .section-title::before {
+    content: '## ';
+    color: var(--fg-dim);
+  }
+  .section-title {
+    font-size: 1rem; font-weight: 700; color: var(--fg-bright);
+    margin-bottom: 0.75rem; letter-spacing: 0.05em;
+  }
+
+  .term-line { display: block; }
+  .term-prompt::before {
+    content: '$ ';
+    color: var(--fg-dim); user-select: none;
+  }
+
+  /* ── SOCIAL LINKS ── */
+  .social-grid {
+    display: flex; flex-direction: column; gap: 0.4rem;
+    padding: 0.5rem 0;
+  }
+  .social-link {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    padding: 0.3rem 0;
+  }
+  .social-handle {
+    color: var(--fg-dim); font-size: 0.8rem;
+  }
+  .social-icon {
+    display: inline-block; width: 1.4rem; text-align: center;
+    color: var(--fg-dim);
+  }
+
+  /* ── LIKES ── */
+  .likes-list {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 1.5rem;
+    padding: 0.5rem 0 0.5rem 1.2rem;
+  }
+  .likes-list li {
+    list-style: none;
+  }
+  .likes-list li::before {
+    content: '> '; color: var(--fg-dim);
+  }
+  @media (max-width: 450px) { .likes-list { grid-template-columns: 1fr; } }
+
+  /* ── GALLERY ── */
+  .gallery-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.75rem; margin-top: 0.75rem;
+  }
+  .gallery-item {
+    position: relative; overflow: hidden; border: 1px solid var(--fg-dim);
+    border-radius: 2px; background: #000; aspect-ratio: 1;
+    transition: border-color 0.2s;
+  }
+  .gallery-item:hover { border-color: var(--fg); }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; transition: opacity 0.3s;
+  }
+  .gallery-item img.loading { opacity: 0; }
+  .gallery-item img.loaded { opacity: 1; }
+
+  .gallery-status {
+    color: var(--fg-dim); font-size: 0.85rem; padding: 0.5rem 0;
+    font-style: italic;
+  }
+  .gallery-status.error { color: #cc3333; }
+  .gallery-status .blink { animation: blink 1.2s step-end infinite; }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 3rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--fg-dim);
+    font-size: 0.8rem; color: var(--fg-dim); text-align: center;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--fg-dim); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--fg); }
+
+  /* ── SELECTION ── */
+  ::selection { background: var(--fg); color: var(--bg); }
+
+  /* ── AVATAR ── */
+  .avatar-row {
+    display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1rem;
+  }
+  .avatar {
+    width: 64px; height: 64px; border-radius: 2px;
+    border: 1px solid var(--fg-dim); object-fit: cover; flex-shrink: 0;
+    background: #111;
+  }
+  @media (max-width: 450px) { .avatar-row { flex-direction: column; align-items: flex-start; } }
+
+  /* ── FULLSCREEN MODAL ── */
+  .modal {
+    display: none; position: fixed; z-index: 20;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); cursor: pointer;
+    align-items: center; justify-content: center;
+  }
+  .modal.open { display: flex; }
+  .modal img {
+    max-width: 90vw; max-height: 90vh; object-fit: contain;
+    border: 1px solid var(--fg-dim);
+  }
+  .modal .close-hint {
+    position: absolute; bottom: 1.5rem; font-size: 0.8rem;
+    color: var(--fg-dim); font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="matrix-rain"></canvas>
+<div class="crt-overlay"></div>
+
+<div class="lang-toggle">
+  <button data-lang="es" class="active" aria-label="Español">ES</button>
+  <button data-lang="en" aria-label="English">EN</button>
+</div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="ascii-header">
+  ██████╗ ██████╗  ██████╗ ███╗   ██╗██╗  ██╗
+  ██╔══██╗██╔══██╗██╔═══██╗████╗  ██║╚██╗██╔╝
+  ██████╔╝██████╔╝██║   ██║██╔██╗ ██║ ╚███╔╝
+  ██╔══██╗██╔══██╗██║   ██║██║╚██╗██║ ██╔██╗
+  ██████╔╝██║  ██║╚██████╔╝██║ ╚████║██╔╝ ██╗
+  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝
+
+    ██╗      █████╗ ██╗██████╗
+    ██║     ██╔══██╗██║██╔══██╗
+    ██║     ███████║██║██████╔╝
+    ██║     ██╔══██║██║██╔══██╗
+    ███████╗██║  ██║██║██║  ██║
+    ╚══════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝
+  </div>
+
+  <div class="tagline" data-i18n="tagline">sitio personal</div>
+
+  <!-- ABOUT / BIO -->
+  <section>
+    <h2 class="section-title" data-i18n="about.title">Sobre mí</h2>
+    <div class="avatar-row">
+      <!-- Place your avatar here: put Lain-Icon-2.jpg (or any image) in /img/ and update src -->
+      <img class="avatar" src="img/avatar-placeholder.jpg" alt="avatar"
+           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2264%22 height=%2264%22><rect fill=%22%23111%22 width=%2264%22 height=%2264%22/><text x=%2232%22 y=%2236%22 text-anchor=%22middle%22 fill=%22%2300ff4140%22 font-family=%22monospace%22 font-size=%2224%22>B</text></svg>'">
+      <p class="term-line term-prompt" data-i18n="about.bio">
+        Estudiante de ingeniería en sistemas y creadora de contenido.<br>
+        Este es el sitio en el que comparto mis pasatiempos y proyectos.
+      </p>
+    </div>
+  </section>
+
+  <!-- SOCIAL -->
+  <section>
+    <h2 class="section-title" data-i18n="social.title">Encuéntrame en</h2>
+    <div class="social-grid">
+      <a class="social-link" href="https://pxlmo.com/@bronx" target="_blank" rel="noopener">
+        <span class="social-icon">◈</span>
+        <span>Pixelfed</span>
+        <span class="social-handle">@bronx@pxlmo.com</span>
+      </a>
+      <a class="social-link" href="https://mstdn.party/@bronx" target="_blank" rel="noopener">
+        <span class="social-icon">◈</span>
+        <span>Mastodon</span>
+        <span class="social-handle">@bronx@mstdn.party</span>
+      </a>
+      <a class="social-link" href="https://bsky.app/profile/its-bronx.bsky.social" target="_blank" rel="noopener">
+        <span class="social-icon">◈</span>
+        <span>Bluesky</span>
+        <span class="social-handle">@its-bronx.bsky.social</span>
+      </a>
+      <span class="social-link" style="opacity:0.6;cursor:default;">
+        <span class="social-icon">◇</span>
+        <span>Bridge (Pixelfed → Bluesky)</span>
+        <span class="social-handle">@bronx.pxlmo.com.ap.brid.gy</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- LIKES -->
+  <section>
+    <h2 class="section-title" data-i18n="likes.title">Cosas que me gustan</h2>
+    <ul class="likes-list">
+      <li data-i18n="likes.item1">Dibujo (digital y tradicional)</li>
+      <li data-i18n="likes.item2">Música</li>
+      <li data-i18n="likes.item3">Tecnología</li>
+      <li data-i18n="likes.item4">Self-hosting</li>
+      <li data-i18n="likes.item5">Linux</li>
+      <li data-i18n="likes.item6">Videojuegos</li>
+    </ul>
+  </section>
+
+  <!-- DRAWINGS GALLERY -->
+  <section>
+    <h2 class="section-title" data-i18n="gallery.title">Dibujos</h2>
+    <p class="gallery-status" id="gallery-status">
+      <span class="blink">_</span>
+      <span data-i18n="gallery.loading">cargando dibujos...</span>
+    </p>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="modal" id="image-modal" onclick="closeModal()">
+    <img id="modal-img" src="" alt="full-size drawing">
+    <span class="close-hint" data-i18n="gallery.close">haz clic para cerrar</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="term-prompt" data-i18n="footer">hecho con &lt;3 y emuladores de terminal</span>
+  </footer>
+
+</div>
+
+<script>
+// ─── I18N ──────────────────────────────────────────────────────────────────
+const lang = {
+  es: {
+    tagline: 'sitio personal',
+    'about.title': 'Sobre mí',
+    'about.bio': 'Estudiante de ingeniería en sistemas y creadora de contenido.\nEste es el sitio en el que comparto mis pasatiempos y proyectos.',
+    'social.title': 'Encuéntrame en',
+    'likes.title': 'Cosas que me gustan',
+    'likes.item1': 'Dibujo (digital y tradicional)',
+    'likes.item2': 'Música',
+    'likes.item3': 'Tecnología',
+    'likes.item4': 'Self-hosting',
+    'likes.item5': 'Linux',
+    'likes.item6': 'Videojuegos',
+    'gallery.title': 'Dibujos',
+    'gallery.loading': 'cargando dibujos...',
+    'gallery.error': 'error al cargar dibujos, mostrando galería local',
+    'gallery.empty': 'no se encontraron dibujos',
+    'gallery.close': 'haz clic para cerrar',
+    'gallery.fallback': 'galería local',
+    footer: 'hecho con <3 y emuladores de terminal',
+  },
+  en: {
+    tagline: 'personal site',
+    'about.title': 'About me',
+    'about.bio': 'Software engineering student and content creator.\nThis is the place where I share my hobbies and projects.',
+    'social.title': 'Find me on',
+    'likes.title': 'Things I like',
+    'likes.item1': 'Drawing (digital & traditional)',
+    'likes.item2': 'Music',
+    'likes.item3': 'Tech',
+    'likes.item4': 'Self-hosting',
+    'likes.item5': 'Linux',
+    'likes.item6': 'Video games',
+    'gallery.title': 'Drawings',
+    'gallery.loading': 'fetching drawings...',
+    'gallery.error': 'failed to load drawings, showing local gallery',
+    'gallery.empty': 'no drawings found',
+    'gallery.close': 'click to close',
+    'gallery.fallback': 'local gallery',
+    footer: 'built with <3 and terminal emulators',
+  }
+};
+
+let currentLang = 'es';
+
+function setLang(locale) {
+  currentLang = locale;
+  const strings = lang[locale];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (strings[key] !== undefined) {
+      el.innerHTML = strings[key].replace(/\n/g, '<br>');
+    }
+  });
+  document.querySelectorAll('.lang-toggle button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === locale);
+  });
+  document.documentElement.lang = locale;
+  localStorage.setItem('bronx-lang', locale);
+}
+
+document.querySelectorAll('.lang-toggle button').forEach(btn => {
+  btn.addEventListener('click', () => setLang(btn.dataset.lang));
+});
+
+// restore saved language
+const saved = localStorage.getItem('bronx-lang');
+if (saved === 'en' || saved === 'es') setLang(saved);
+
+// ─── MATRIX RAIN ────────────────────────────────────────────────────────────
+const canvas = document.getElementById('matrix-rain');
+const ctx = canvas.getContext('2d');
+
+let cols, drops;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  cols = Math.floor(canvas.width / 14);
+  drops = Array.from({ length: cols }, () => Math.floor(Math.random() * -canvas.height / 16));
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
+
+function drawRain() {
+  ctx.fillStyle = 'rgba(10,10,10,0.05)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.font = '14px monospace';
+  for (let i = 0; i < cols; i++) {
+    const char = chars[Math.floor(Math.random() * chars.length)];
+    const x = i * 14;
+    const y = drops[i] * 16;
+    ctx.fillStyle = y > 0 ? '#00ff41' : '#005a1a';
+    ctx.globalAlpha = y > 0 ? 0.35 : 0.12;
+    ctx.fillText(char, x, y);
+    ctx.globalAlpha = 1;
+    if (y > canvas.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+    drops[i]++;
+  }
+}
+
+setInterval(drawRain, 50);
+
+// ─── PIXELFED GALLERY ───────────────────────────────────────────────────────
+const PIXELFED_INSTANCE = 'pxlmo.com';
+const PIXELFED_USERNAME = 'bronx';
+
+const statusEl = document.getElementById('gallery-status');
+const gridEl = document.getElementById('gallery-grid');
+const modal = document.getElementById('image-modal');
+const modalImg = document.getElementById('modal-img');
+
+function renderImages(urls) {
+  gridEl.innerHTML = '';
+  if (urls.length === 0) {
+    statusEl.className = 'gallery-status';
+    statusEl.innerHTML = `<span data-i18n="gallery.empty">${lang[currentLang]['gallery.empty']}</span>`;
+    return;
+  }
+  statusEl.style.display = 'none';
+  urls.forEach(url => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+
+    const img = document.createElement('img');
+    img.className = 'loading';
+    img.loading = 'lazy';
+    img.src = url;
+    img.alt = 'drawing';
+
+    img.onload = () => img.classList.replace('loading', 'loaded');
+    img.onerror = () => { item.remove(); };
+
+    img.addEventListener('click', () => openModal(url));
+
+    item.appendChild(img);
+    gridEl.appendChild(item);
+  });
+}
+
+async function fetchPixelfedDrawings() {
+  try {
+    // Step 1: lookup account
+    const lookupUrl = `https://${PIXELFED_INSTANCE}/api/v1/accounts/lookup?acct=${PIXELFED_USERNAME}`;
+    const lookupRes = await fetch(lookupUrl);
+    if (!lookupRes.ok) throw new Error('lookup failed');
+    const account = await lookupRes.json();
+    const accountId = account.id;
+
+    // Step 2: fetch statuses with media
+    const statusUrl = `https://${PIXELFED_INSTANCE}/api/v1/accounts/${accountId}/statuses?only_media=true&limit=30`;
+    const statusRes = await fetch(statusUrl);
+    if (!statusRes.ok) throw new Error('statuses failed');
+    const statuses = await statusRes.json();
+
+    // Step 3: extract image URLs
+    const imageUrls = [];
+    statuses.forEach(status => {
+      if (status.media_attachments) {
+        status.media_attachments.forEach(media => {
+          if (media.type === 'image' && media.url) {
+            imageUrls.push(media.url);
+          }
+        });
+      }
+    });
+
+    if (imageUrls.length > 0) {
+      renderImages(imageUrls);
+      return true;
+    }
+    return false;
+  } catch (e) {
+    console.warn('Pixelfed API failed:', e);
+    return false;
+  }
+}
+
+function loadLocalDrawings() {
+  // ── add your local drawing filenames here (place them in /drawings/) ──
+  const files = [
+    'drawings/img1.jpg',
+    'drawings/img2.jpg',
+    'drawings/img3.jpg',
+    'drawings/img4.jpg',
+    'drawings/img5.jpg',
+    'drawings/img6.jpg',
+    'drawings/img7.jpg',
+    'drawings/img8.jpg',
+    'drawings/img9.jpg',
+    'drawings/img10.jpg',
+    'drawings/img11.jpg',
+    'drawings/img12.jpg',
+  ];
+  renderImages(files);
+  statusEl.style.display = 'block';
+  statusEl.className = 'gallery-status';
+  statusEl.innerHTML = `// ${lang[currentLang]['gallery.fallback']}`;
+}
+
+(async function initGallery() {
+  statusEl.innerHTML = `<span class="blink">_</span> ${lang[currentLang]['gallery.loading']}`;
+  const success = await fetchPixelfedDrawings();
+  if (!success) {
+    statusEl.innerHTML = `<span class="blink">_</span> ${lang[currentLang]['gallery.error']}`;
+    statusEl.className = 'gallery-status error';
+    loadLocalDrawings();
+  }
+})();
+
+// ─── MODAL ──────────────────────────────────────────────────────────────────
+function openModal(url) {
+  modalImg.src = url;
+  modal.classList.add('open');
+}
+
+function closeModal() {
+  modal.classList.remove('open');
+  modalImg.src = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
