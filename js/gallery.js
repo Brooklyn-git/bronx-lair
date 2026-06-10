@@ -87,7 +87,7 @@ function loadLocalDrawings() {
   renderImages(files);
   statusEl.style.display = 'block';
   statusEl.className = 'gallery-status';
-  statusEl.innerHTML = `// ${lang[currentLang]['gallery.fallback']}`;
+  statusEl.innerHTML = ` ${lang[currentLang]['gallery.fallback']}`;
 }
 
 (async function initGallery() {

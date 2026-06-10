@@ -70,15 +70,15 @@ a:hover, a:focus { color: var(--fg-bright); border-bottom-color: var(--fg-bright
 }
 
 .ascii-header {
-  font-size: 0.45rem; line-height: 1.15; white-space: pre;
+  font-size: 0.7rem; line-height: 1.15; white-space: pre;
   color: var(--fg); margin-bottom: 0.5rem; user-select: none;
   text-align: center;
 }
-@media (max-width: 500px) { .ascii-header { font-size: 0.25rem; } }
+@media (max-width: 500px) { .ascii-header { font-size: 0.3rem; } }
 
 .social-bar {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   align-items: center;
   margin-bottom: 0.75rem;
 }
@@ -88,6 +88,14 @@ a:hover, a:focus { color: var(--fg-bright); border-bottom-color: var(--fg-bright
   border-bottom: none;
   transition: all 0.2s;
   line-height: 1;
+}
+.social-bar-item svg {
+  width: 35px;
+  height: 35px;
+}
+.social-bar-item[href*="pxlmo.com/@"] svg {
+  width: 43px;
+  height: 43px;
 }
 .social-bar-item:hover {
   color: var(--fg-bright);
@@ -327,3 +335,65 @@ footer .src-link:hover {
 
 /* ── SELECTION ── */
 ::selection { background: var(--fg); color: var(--bg); }
+
+/* ── SPLASH SCREEN ── */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.88);
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 3rem;
+  font-family: var(--font);
+  color: var(--fg);
+  font-size: 1rem;
+  line-height: 1.6;
+  cursor: default;
+}
+.splash.visible {
+  display: flex;
+}
+.splash.hidden {
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.splash-lines {
+  max-width: 640px;
+}
+.splash-line {
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.splash-line.visible {
+  opacity: 1;
+}
+.splash-ok {
+  color: var(--fg-bright);
+  margin-right: 0.75rem;
+}
+.splash-prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.splash-prompt.visible {
+  opacity: 1;
+}
+.splash-prompt .cursor {
+  animation: blink 1.2s step-end infinite;
+}
+.splash-prompt .hint {
+  color: var(--fg-dim);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+@media (max-width: 500px) {
+  .splash { padding: 1.5rem; font-size: 0.85rem; }
+  .splash-lines { max-width: 100%; }
+}
