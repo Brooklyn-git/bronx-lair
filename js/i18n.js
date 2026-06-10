@@ -2,7 +2,7 @@ const lang = {
   es: {
     tagline: 'sitio personal',
     'about.title': 'Sobre mí',
-    'about.bio': 'Estudiante de ingeniería en sistemas y creadora de contenido.\nEste es el sitio en el que comparto mis pasatiempos y proyectos.',
+    'about.bio': 'Estudiante de Ingeniería en Software.\nEste es el sitio en el que compartiré mis hobbies y proyectos.',
     'likes.title': 'Cosas que me gustan',
     'likes.item1': 'Dibujo (digital y tradicional)',
     'likes.item2': 'Música',
@@ -26,7 +26,7 @@ const lang = {
   en: {
     tagline: 'personal site',
     'about.title': 'About me',
-    'about.bio': 'Software engineering student and content creator.\nThis is the place where I share my hobbies and projects.',
+    'about.bio': 'Software Engineering student.\nThis is the place where I will share my hobbies and projects.',
     'likes.title': 'Things I like',
     'likes.item1': 'Drawing (digital & traditional)',
     'likes.item2': 'Music',
