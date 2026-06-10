@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bronx' lair</title>
+<title>Bronx' lair — Dibujos</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -43,42 +43,31 @@
   <main>
 
     <section>
-      <h2 class="section-title" data-i18n="about.title">Sobre mí</h2>
-      <div class="msg-box-outer">
-        <img class="avatar" src="img/avatar-placeholder.jpg" alt="avatar"
-             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2264%22 height=%2264%22><rect fill=%22%23111%22 width=%2264%22 height=%2264%22/><text x=%2232%22 y=%2236%22 text-anchor=%22middle%22 fill=%22%2300ff4140%22 font-family=%22monospace%22 font-size=%2224%22>B</text></svg>'">
-        <div class="msg-box-inner">
-          <p class="term-line term-prompt" data-i18n="about.bio">
-            Estudiante de ingeniería en sistemas y creadora de contenido.<br>
-            Este es el sitio en el que comparto mis pasatiempos y proyectos.
-          </p>
-        </div>
-      </div>
+      <h2 class="section-title" data-i18n="gallery.title">Dibujos</h2>
+      <p class="gallery-status" id="gallery-status">
+        <span class="blink">_</span>
+        <span data-i18n="gallery.loading">cargando dibujos...</span>
+      </p>
+      <div class="gallery-grid" id="gallery-grid"></div>
     </section>
 
-    <section>
-      <h2 class="section-title" data-i18n="likes.title">Cosas que me gustan</h2>
-      <ul class="likes-list">
-        <li data-i18n="likes.item1">Dibujo (digital y tradicional)</li>
-        <li data-i18n="likes.item2">Música</li>
-        <li data-i18n="likes.item3">Tecnología</li>
-        <li data-i18n="likes.item4">Self-hosting</li>
-        <li data-i18n="likes.item5">Linux</li>
-        <li data-i18n="likes.item6">Videojuegos</li>
-      </ul>
-    </section>
-
-    <section class="drawings-section">
-      <a href="drawings.html" class="drawings-btn-link">
-        <div class="drawings-btn">
-          <div class="drawings-btn-placeholder">◇</div>
-          <span class="drawings-btn-overlay" data-i18n="drawings.btn">dibujos</span>
-        </div>
+    <div class="action-buttons">
+      <a href="https://pxlmo.com/@bronx" class="action-btn" target="_blank" rel="noopener">
+        <span class="action-btn-icon">◆</span>
+        <span data-i18n="drawings.seePixelfed">ver en pixelfed</span>
       </a>
-      <p class="under-construction" data-i18n="main.construction">en construcción</p>
-    </section>
+      <a href="https://bsky.app/profile/its-bronx.bsky.social" class="action-btn" target="_blank" rel="noopener">
+        <span class="action-btn-icon">◇</span>
+        <span data-i18n="drawings.seeBluesky">ver en bluesky</span>
+      </a>
+    </div>
 
   </main>
+
+  <div class="modal" id="image-modal" onclick="closeModal()">
+    <img id="modal-img" src="" alt="full-size drawing">
+    <span class="close-hint" data-i18n="gallery.close">haz clic para cerrar</span>
+  </div>
 
   <div id="footer-placeholder">
   <footer>
@@ -93,5 +82,6 @@
 <script src="js/i18n.js"></script>
 <script src="js/include.js"></script>
 <script src="js/matrix.js"></script>
+<script src="js/gallery.js"></script>
 </body>
 </html>
