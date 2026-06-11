@@ -166,6 +166,49 @@ section { margin-bottom: 2.5rem; }
 }
 @media (max-width: 450px) { .likes-list { grid-template-columns: 1fr; } }
 
+/* ── TERMINAL BOX (ABOUT PAGE) ── */
+.term-box {
+  border: 1px solid var(--fg-dim);
+  margin-bottom: 2rem;
+}
+.term-box-header {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid var(--fg-dim);
+  background: rgba(0,255,65,0.03);
+}
+.term-box-dot {
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--fg-dim);
+  border-radius: 50%;
+}
+.term-box-title {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+  user-select: none;
+}
+.term-box-body {
+  padding: 0.75rem 1rem;
+}
+.term-box-list {
+  list-style: none;
+  padding: 0;
+}
+.term-box-list li {
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  position: relative;
+}
+.term-box-list li::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  color: var(--fg-dim);
+}
+
 /* ── DRAWINGS BUTTON (INDEX) ── */
 .drawings-section {
   text-align: center;
