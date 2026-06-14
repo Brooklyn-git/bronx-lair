@@ -1,14 +1,23 @@
 (async function() {
   try {
+    async function tryFetch(paths) {
+      for (const p of paths) {
+        try {
+          const res = await fetch(p);
+          if (res.ok) return await res.text();
+        } catch(e) {}
+      }
+      throw Error('fetch failed');
+    }
+
     const [headerHtml, footerHtml] = await Promise.all([
-      fetch('/header.html').then(r => { if (!r.ok) throw Error('header fetch failed'); return r.text(); }),
-      fetch('/footer.html').then(r => { if (!r.ok) throw Error('footer fetch failed'); return r.text(); }),
+      tryFetch(['header.html', '../header.html']),
+      tryFetch(['footer.html', '../footer.html']),
     ]);
     const headerEl = document.getElementById('header-placeholder');
     const footerEl = document.getElementById('footer-placeholder');
     if (headerEl) headerEl.innerHTML = headerHtml;
     if (footerEl) footerEl.innerHTML = footerHtml;
-    // Re-apply translations since [data-i18n] elements were replaced
     const saved = localStorage.getItem('bronx-lang');
     setLang(saved === 'en' || saved === 'es' ? saved : 'es');
   } catch (e) {
