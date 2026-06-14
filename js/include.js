@@ -1,8 +1,8 @@
 (async function() {
   try {
     const [headerHtml, footerHtml] = await Promise.all([
-      fetch('header.html').then(r => { if (!r.ok) throw Error('header fetch failed'); return r.text(); }),
-      fetch('footer.html').then(r => { if (!r.ok) throw Error('footer fetch failed'); return r.text(); }),
+      fetch('/header.html').then(r => { if (!r.ok) throw Error('header fetch failed'); return r.text(); }),
+      fetch('/footer.html').then(r => { if (!r.ok) throw Error('footer fetch failed'); return r.text(); }),
     ]);
     const headerEl = document.getElementById('header-placeholder');
     const footerEl = document.getElementById('footer-placeholder');

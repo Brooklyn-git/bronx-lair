@@ -3,14 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bronx' lair — Sobre mí</title>
-<link rel="stylesheet" href="css/style.css">
+<title>Bronx' lair — 404</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
-<div id="splash">
-  <div class="splash-lines"></div>
-</div>
 
 <canvas id="matrix-rain"></canvas>
 <div class="crt-overlay"></div>
@@ -21,9 +17,9 @@
 </div>
 
 <div class="container">
-  <div id="header-placeholder">
+
   <header class="page-header">
-    <a href="index.html" class="ascii-link">
+    <a href="/" class="ascii-link">
       <div class="ascii-header">
   ██████╗ ██████╗  ██████╗ ███╗   ██╗██╗  ██╗       ██╗      █████╗ ██╗██████╗
   ██╔══██╗██╔══██╗██╔═══██╗████╗  ██║╚██╗██╔╝       ██║     ██╔══██╗██║██╔══██╗
@@ -34,7 +30,7 @@
       </div>
     </a>
     <div class="social-bar">
-      <a href="about.html" class="social-bar-item" title="About me">
+      <a href="/about/" class="social-bar-item" title="About me">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
           <rect x="1" y="1" width="18" height="18" fill="#111" stroke="currentColor" stroke-width="1.5" rx="2"/>
           <text x="10" y="14" text-anchor="middle" fill="currentColor" font-family="monospace" font-size="14" font-weight="bold">B</text>
@@ -66,88 +62,39 @@
     </div>
     <div class="tagline" data-i18n="tagline">sitio personal</div>
   </header>
-  </div>
 
   <main>
 
-    <section>
-      <h2 class="section-title" data-i18n="about.title">Sobre mí</h2>
-      <div class="msg-box-outer">
-        <img class="avatar" src="img/avatar-placeholder.jpg" alt="avatar"
-             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2264%22 height=%2264%22><rect fill=%22%23111%22 width=%2264%22 height=%2264%22/><text x=%2232%22 y=%2236%22 text-anchor=%22middle%22 fill=%22%2300ff4140%22 font-family=%22monospace%22 font-size=%2224%22>B</text></svg>'">
-        <div class="msg-box-inner">
-          <p class="term-line term-prompt" data-i18n="about.bio">
-            Eres alguien curioso, ¿no crees?.<br>
-            Este es el sitio en el que comparto mis pasatiempos y proyectos.
-          </p>
-          <p class="term-line term-prompt" data-i18n="about.bio.extra">
-            ya que estás aquí, te cuento algunas cosas sobre mí:
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-title" data-i18n="funfacts.title">Datos curiosos sobre mí</h2>
-      <div class="term-box">
+    <section style="text-align: center; padding: 3rem 0;">
+      <div class="term-box" style="display: inline-block; text-align: left; min-width: 280px;">
         <div class="term-box-header">
           <span class="term-box-dot"></span>
           <span class="term-box-dot"></span>
           <span class="term-box-dot"></span>
-          <span class="term-box-title">sh: about.sh</span>
+          <span class="term-box-title">sh: error.sh</span>
         </div>
         <div class="term-box-body">
-          <ul class="term-box-list">
-            <li data-i18n="funfacts.item1">Tengo 20 años</li>
-            <li data-i18n="funfacts.item2">Hablo español, inglés y LSM (Lengua de Señas Mexicana); actualmente aprendiendo finlandés</li>
-            <li data-i18n="funfacts.item7">Soy estudiante de ingeniería en software</li>
-            <li data-i18n="funfacts.item8">Soy un nerd de Linux</li>
-            <li data-i18n="funfacts.item3">Actualmente uso Kubuntu y Artix Linux (runit)</li>
-            <li data-i18n="funfacts.item4">Me uní al fediverso y me convertí en usuario de GNU/Linux en junio de 2025</li>
-            <li data-i18n="funfacts.item5">Mi juego favorito es Stardew Valley</li>
-            <li data-i18n="funfacts.item6">Mi saga de videojuegos favorita es Touhou</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-title" data-i18n="likes.title">Cosas que me gustan</h2>
-      <div class="term-box">
-        <div class="term-box-header">
-          <span class="term-box-dot"></span>
-          <span class="term-box-dot"></span>
-          <span class="term-box-dot"></span>
-          <span class="term-box-title">sh: likes.sh</span>
-        </div>
-        <div class="term-box-body">
-          <ul class="likes-list">
-            <li data-i18n="likes.item1">Dibujo (digital y tradicional)</li>
-            <li data-i18n="likes.item2">Música</li>
-            <li data-i18n="likes.item3">Tecnología</li>
-            <li data-i18n="likes.item4">Self-hosting</li>
-            <li data-i18n="likes.item5">Linux</li>
-            <li data-i18n="likes.item6">Videojuegos</li>
-          </ul>
+          <p style="font-size: 2rem; font-weight: 700; color: var(--fg-bright); text-align: center; margin-bottom: 0.75rem;" data-i18n="notfound.title">Error 404</p>
+          <p class="term-line term-prompt" data-i18n="notfound.message" style="margin-bottom: 0.5rem;">La página que buscas no existe.</p>
+          <p class="term-line" style="margin-top: 1rem;">
+            <span style="color: var(--fg-dim);">$ </span>
+            <a href="/" data-i18n="notfound.back">volver al inicio</a>
+          </p>
         </div>
       </div>
     </section>
 
   </main>
 
-  <div id="footer-placeholder">
   <footer>
     <span class="term-prompt" data-i18n="footer">hecho con &lt;3 y emuladores de terminal</span>
     <br>
     <span>Bronx© 2026 <a href="https://github.com/Brooklyn-git/bronx-lair" class="src-link" data-i18n="footer.source">código fuente</a></span>
   </footer>
-  </div>
 
 </div>
 
-<script src="js/splash.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/include.js"></script>
-<script src="js/matrix.js"></script>
+<script src="/js/i18n.js"></script>
+<script src="/js/matrix.js"></script>
 </body>
 </html>
