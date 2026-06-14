@@ -71,18 +71,18 @@ async function fetchPixelfedDrawings() {
 
 function loadLocalDrawings() {
   const files = [
-    'drawings/img1.jpg',
-    'drawings/img2.jpg',
-    'drawings/img3.jpg',
-    'drawings/img4.jpg',
-    'drawings/img5.jpg',
-    'drawings/img6.jpg',
-    'drawings/img7.jpg',
-    'drawings/img8.jpg',
-    'drawings/img9.jpg',
-    'drawings/img10.jpg',
-    'drawings/img11.jpg',
-    'drawings/img12.jpg',
+    'img1.jpg',
+    'img2.jpg',
+    'img3.jpg',
+    'img4.jpg',
+    'img5.jpg',
+    'img6.jpg',
+    'img7.jpg',
+    'img8.jpg',
+    'img9.jpg',
+    'img10.jpg',
+    'img11.jpg',
+    'img12.jpg',
   ];
   renderImages(files);
   statusEl.style.display = 'block';
