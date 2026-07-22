@@ -4,4 +4,4 @@ Here you can find my hobbies (like my drawings!), social media and things about 
 
 This is a WIP and may add new things, so, check it from time to time!
 
-It is available both in english and spanish.
+It is available both in english and spanish
