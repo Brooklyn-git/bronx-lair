@@ -308,13 +308,17 @@ section { margin-bottom: 2.5rem; }
   border-radius: 2px;
   background: #000;
   padding: 4px;
-  opacity: 0.75;
+  opacity: 0.85;
   transition: opacity 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 .project-box:hover .project-logo {
   opacity: 1;
   border-color: var(--fg);
   box-shadow: var(--glow);
+}
+
+img.project-logo {
+  filter: grayscale(1) sepia(1) saturate(5) hue-rotate(95deg);
 }
 
 .project-name {
