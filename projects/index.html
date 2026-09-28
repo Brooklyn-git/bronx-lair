@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bronx' lair</title>
-<link rel="stylesheet" href="css/style.css">
+<title>Bronx' lair — Proyectos</title>
+<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
@@ -21,10 +21,11 @@
 </div>
 
 <div class="container">
+
   <div id="header-placeholder">
   <header class="page-header">
-      <a href="." class="ascii-link">
-        <div class="ascii-header">
+    <a href=".." class="ascii-link">
+      <div class="ascii-header">
   ██████╗ ██████╗  ██████╗ ███╗   ██╗██╗  ██╗       ██╗      █████╗ ██╗██████╗
   ██╔══██╗██╔══██╗██╔═══██╗████╗  ██║╚██╗██╔╝       ██║     ██╔══██╗██║██╔══██╗
   ██████╔╝██████╔╝██║   ██║██╔██╗ ██║ ╚███╔╝        ██║     ███████║██║██████╔╝
@@ -34,7 +35,7 @@
       </div>
     </a>
     <div class="social-bar">
-      <a href="about/" class="social-bar-item" title="About me">
+      <a href="../about/" class="social-bar-item" title="About me">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
           <rect x="1" y="1" width="18" height="18" fill="#111" stroke="currentColor" stroke-width="1.5" rx="2"/>
           <text x="10" y="14" text-anchor="middle" fill="currentColor" font-family="monospace" font-size="14" font-weight="bold">B</text>
@@ -65,20 +66,26 @@
   <main>
 
     <section>
-      <h2 class="section-title" data-i18n="main.title">¿Qué es esto?</h2>
+      <h2 class="section-title" data-i18n="projects.title">¡Proyectos de programación!</h2>
       <div class="term-box">
         <div class="term-box-header">
           <span class="term-box-dot"></span>
           <span class="term-box-dot"></span>
           <span class="term-box-dot"></span>
-          <span class="term-box-title" data-i18n="main.introTitle">sh: intro.sh</span>
+          <span class="term-box-title" data-i18n="projects.boxTitle">sh: projects.sh</span>
         </div>
         <div class="term-box-body flex">
-          <img class="avatar" src="img/avatar.png" alt="avatar"
+          <img class="avatar" src="../img/avatar.png" alt="avatar"
                onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2264%22 height=%2264%22><rect fill=%22%23111%22 width=%2264%22 height=%2264%22/><text x=%2232%22 y=%2236%22 text-anchor=%22middle%22 fill=%22%2300ff4140%22 font-family=%22monospace%22 font-size=%2224%22>B</text></svg>'">
           <div style="flex:1">
-            <p class="term-line term-prompt" data-i18n="main.text">
-              Heeeey- huh- tal parece que has llegado a mi página... curioso...
+            <p class="term-line term-prompt" data-i18n="projects.intro1">
+              Ey- ¡así que! te interesa mi trabajo de dev?
+            </p>
+            <p class="term-line term-prompt" data-i18n="projects.intro2">
+              ¡Mira esto!
+            </p>
+            <p class="term-line term-prompt" data-i18n="projects.intro3">
+              ¡Todos esos proyectos son totalmente gratis! <br>¡No dejes que nadie te cobre por ellos!
             </p>
           </div>
         </div>
@@ -86,34 +93,47 @@
     </section>
 
     <section>
-      <div class="tile-row">
-        <a href="drawings/" class="tile-link">
-          <div class="tile">
-            <div class="tile-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="70" height="70">
-                <path fill="currentcolor" d="M100.4 417.2C104.5 402.6 112.2 389.3 123 378.5L304.2 197.3L338.1 163.4C354.7 180 389.4 214.7 442.1 267.4L476 301.3L442.1 335.2L260.9 516.4C250.2 527.1 236.8 534.9 222.2 539L94.4 574.6C86.1 576.9 77.1 574.6 71 568.4C64.9 562.2 62.6 553.3 64.9 545L100.4 417.2zM156 413.5C151.6 418.2 148.4 423.9 146.7 430.1L122.6 517L209.5 492.9C215.9 491.1 221.7 487.8 226.5 483.2L155.9 413.5zM510 267.4C493.4 250.8 458.7 216.1 406 163.4L372 129.5C398.5 103 413.4 88.1 416.9 84.6C430.4 71 448.8 63.4 468 63.4C487.2 63.4 505.6 71 519.1 84.6L554.8 120.3C568.4 133.9 576 152.3 576 171.4C576 190.5 568.4 209 554.8 222.5C551.3 226 536.4 240.9 509.9 267.4z"/>
-              </svg>
-            </div>
-            <span class="tile-overlay" data-i18n="drawings.btn">
-              dibujos
-            </span>
-          </div>
-        </a>
-        <a href="projects/" class="tile-link">
-          <div class="tile">
-            <div class="tile-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="4 17 10 11 4 5"/>
-                <line x1="12" y1="19" x2="20" y2="19"/>
-              </svg>
-            </div>
-            <span class="tile-overlay" data-i18n="projects.btn">
-              proyectos
-            </span>
-          </div>
-        </a>
+      <h2 class="section-title" data-i18n="projects.apps">Apps</h2>
+
+      <div class="project-card">
+        <img class="project-logo" src="../img/logos/Unmute-logo.svg" alt="Unmute AAC logo">
+        <div class="project-info">
+          <h3 class="project-name">Unmute AAC</h3>
+          <p class="project-desc" data-i18n="projects.unmute.desc">
+            Una app de Android para gente que no puede hablar... o que simplemente no quiere hacerlo. Un AAC que puedes customizable a tu gusto: cómo se ve, cómo suena, cómo lo usas.
+          </p>
+          <a href="https://github.com/Brooklyn-git/Unmute-AAC-App/releases" class="term-line term-prompt project-link" target="_blank" rel="noopener">
+            <span data-i18n="projects.unmute.link">consigue la app</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"/>
+              <path d="M8 7h9v9"/>
+            </svg>
+          </a>
+        </div>
       </div>
-      <p class="under-construction" data-i18n="main.construction">en construcción</p>
+
+      <div class="project-card">
+        <svg class="project-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+          <text x="32" y="36" text-anchor="middle" fill="var(--fg-dim)" font-family="monospace" font-size="24">?</text>
+        </svg>
+        <div class="project-info">
+          <h3 class="project-name">
+            Duedigest
+            <span class="project-badge" data-i18n="projects.beta">beta</span>
+            <span class="project-badge" data-i18n="projects.unreleased">sin publicar</span>
+          </h3>
+          <p class="project-desc" data-i18n="projects.duedigest.desc">
+            Una app para Android y escritorio, escrita en Kotlin. Hecho por un estudiante para estudiantes: trae tus actividades de Moodle y las echa directo a tu lista de tareas.
+          </p>
+          <a href="https://github.com/Brooklyn-git/Duedigest-BETA" class="term-line term-prompt project-link" target="_blank" rel="noopener">
+            <span data-i18n="projects.duedigest.link">mira la app</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7"/>
+              <path d="M8 7h9v9"/>
+            </svg>
+          </a>
+        </div>
+      </div>
     </section>
 
   </main>
@@ -128,9 +148,9 @@
 
 </div>
 
-<script src="js/splash.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/include.js"></script>
-<script src="js/matrix.js"></script>
+<script src="../js/splash.js"></script>
+<script src="../js/i18n.js"></script>
+<script src="../js/include.js"></script>
+<script src="../js/matrix.js"></script>
 </body>
 </html>
