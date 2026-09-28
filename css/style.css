@@ -292,18 +292,11 @@ section { margin-bottom: 2.5rem; }
   font-size: 0.85rem;
 }
 
-/* ── PROJECT CARDS (PROJECTS PAGE) ── */
-.project-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  border: 1px solid var(--fg-dim);
-  background: #111;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
+/* ── APP CARDS (PROJECTS PAGE) ── */
+.project-box {
   transition: border-color 0.2s;
 }
-.project-card:hover {
+.project-box:hover {
   border-color: var(--fg);
 }
 
@@ -318,30 +311,29 @@ section { margin-bottom: 2.5rem; }
   opacity: 0.75;
   transition: opacity 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
-.project-card:hover .project-logo {
+.project-box:hover .project-logo {
   opacity: 1;
   border-color: var(--fg);
   box-shadow: var(--glow);
 }
 
-.project-info {
-  flex: 1;
-  min-width: 0;
-}
-
 .project-name {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
   margin: 0 0 0.4rem;
   font-size: 1rem;
   font-weight: 700;
   color: var(--fg-bright);
   letter-spacing: 0.05em;
 }
+.project-name::before {
+  content: '### ';
+  color: var(--fg-dim);
+  user-select: none;
+}
 
 .project-badge {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.4rem;
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -371,10 +363,6 @@ section { margin-bottom: 2.5rem; }
   width: 0.9rem;
   height: 0.9rem;
   flex-shrink: 0;
-}
-
-@media (max-width: 450px) {
-  .project-card { flex-direction: column; }
 }
 
 /* ── GALLERY ── */
